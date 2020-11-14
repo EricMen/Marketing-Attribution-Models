@@ -4,11 +4,11 @@
 Python Class created to address problems regarding Digital Marketing Attribution.  
   
 ## 2. About Multi-Channel Attribution  
-While browsing online, an user has multiple touchpoints before converting, which could lead to ever so longer and more complex journeys.  
+While browsing online, an user has multiple touchpoints, leading to longer and more complex journeys prior to conversion.  
   
-*How to duly credit conversions and optmize investment on media?*  
+*How do we duly credit conversions and optmize investment on media?*  
   
-To adress this, we apply **Attribution Models**.  
+To address this, we apply **Attribution Models**.  
   
 ### 2.1 Attribution Models  
 **Heuristic Models**:  
@@ -18,7 +18,7 @@ To adress this, we apply **Attribution Models**.
 - Only the last touchpoint is credited for the conversion.  
   
 - **Last Click Non-Direct**:  
-- All direct traffic is ignored and so 100% of the result goes to the last channel through which the client got to the website before converting.  
+- All direct traffic is ignored and so 100% of the result goes to the last channel the client visited before navigating to website and converting. 
   
 - **First Interaction**:  
 - The result is wholly attributed to the first touchpoint.  
@@ -37,7 +37,7 @@ To adress this, we apply **Attribution Models**.
   
 Used in Game Theory, this value is an estimation of the contribution of each individual player in a cooperative game.  
   
-Conversions are credited to the channels by a process of permutating the journeys. In each permutation a channel is given out to estimate how essencial it is overall.  
+Conversions are credited to the channels by a process of permutating the journeys. In each permutation a channel is broken out to estimate how essencial it is overall.  
   
 **As an example**, let's look at the following hypotherical journey:  
   
@@ -60,7 +60,7 @@ To obtain each channel's Shapley Value, we first need to consider all conversion
   
 > Organic Search > Facebook > Direct > **$19**  
   
-The number of component joneys increases exponentially the more distinct channels you have: The rate is 2^n (2 to the power of n) for **n channels**.  
+The number of component journeys increases exponentially the more distinct channels you have: The rate is 2^n (2 to the power of n) for **n channels**.  
   
 In other words, with 3 distinct touchpoints there are 8 permutations. **With over 15, for instance, this process is unfeasible**.  
   
@@ -319,7 +319,7 @@ attributions.attribution_position_based(list_positions_first_middle_last=[0.3, 0
 
 ##### **Time Decay Model** 
 
-There are two customizable settings: The **decay rate**, throght the *decay_over_time** parameter, and the time (in hours) **between each decaiment** through the *frequency* parameter.
+There are two customizable settings: The **decay rate**, through the *decay_over_time** parameter, and the time (in hours) **between each decay** through the *frequency* parameter.
 
 It is worth noting, however, that in case there is more than one touchpoint between frequency intervals the conversion value will be equally distributed among these channels.
 
@@ -370,7 +370,7 @@ attribution_markov = attributions.attribution_markov(transition_to_same_state=Fa
 | 6 | Organic | 5358.270644 |
 | 7 | Google Display | 1213.691671 |
 
-This configuration **does not affect** the overall attributed results for each channel, but the values observed in the **transition matrix**. Because we set *transition_to_same_state* to **False**, the diagonal, indicating states transitioning to themselves, is nulled.
+This configuration **does not affect** the overall attributed results for each channel, but the values observed in the **transition matrix**. Because we set *transition_to_same_state* to **False**, the diagonal which indicating states transitioning to themselves, is nulled.
 
 ```python
 ax, fig = plt.subplots(figsize=(15,10))
@@ -390,7 +390,7 @@ sns.heatmap(attribution_markov[3].round(3), cmap="YlGnBu", annot=True, linewidth
 
 ##### Shapley Value
 
-Finally, the second algorith model of **MAM** whose concept comes from **Game Theory**. The objective here is to distribute the contribution of each player (in our case, channel) in a game of cooperation calculated using combinations of journeys with and without a given channel.
+Finally, the second algorithmic model of **MAM** whose concept comes from **Game Theory**. The objective here is to distribute the contribution of each player (in our case, channel) in a game of cooperation calculated using combinations of journeys with and without a given channel.
 
 The parameter **size** defines a limit of how **long** a **chain of channels** is in every journey. By default, it's value is set to **4**, meaning only the **four last channels preceding a conversion** are considered.
 
@@ -414,7 +414,7 @@ attributions.attribution_shapley(size=4, order=True, values_col='conv_rate')[0]
 | 1281 | Youtube > Organic > Instagram > Facebook | 1 | 1 | 1 | 1.000000 | [0.2357631944623868, 0.2610913781266248, 0.247... |
 | 1282 | Youtube > Organic > Instagram > Google Search | 3 | 3 | 3 | 1.000000 | [0.7223482210689489, 0.7769049003203142, 0.726... |
 
-Finally, the parameter indicating what metric is used to calculate the Shapley Value is **values_col**, which by default is set to *conversion rate*. In doing so, journeys **without conversions** are taken into acount. 
+Finally, the parameter indicating what metric is used to calculate the Shapley Value is **values_col**, which by default is set to *conversion rate*. In doing so, journeys **without conversions** are taken into account. 
 
 It is possible, however, to consider only **literal conversions** when using the model as seen below.
 
